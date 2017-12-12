@@ -31,24 +31,7 @@ const quoteData = [
   },
 ];
 
-// TODO: move this functionality into the QuoteListView!
-// const render = function(quotes) {
-//     console.log('in render');
-//     const renderQuotes = function(quotes) {
-//     const $quotesUl = $('#quotes');
-//     $quotesUl.empty();
-//     quotes.forEach((quote) => {
-//       const quoteView = new QuoteView({
-//         model: quote,
-//         template: _.template($('#quote-template').html()),
-//         tagName: 'li',
-//         className: 'quote',
-//       }) // quoteView
-//       $quotesUl.append(quoteView.render().$el)
-//     }) // forEach
-//   }
-//   renderQuotes(quotes);
-// }
+
 
 
 let quoteTemplate;
@@ -65,16 +48,20 @@ $(document).ready(function() {
   // the start method updates the price of each stock every second
   simulator.start();
 
+  // define the template that will be used in QuoteVistView and QuoteList
   quoteTemplate = _.template($('#quote-template').html());
 
-  // TODO: move the render functionality into the QuoteListView!
-  // render(quotes);
+  // define our bus and extend Backbone.Event into it so that bus will have the functionality to listen to and have events called on it
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
+
 
   // create a new QuoteListView
   const quoteListView = new QuoteListView({
     model: quotes,
     template: quoteTemplate,
     el: $('#quotes-container'),
+    bus: bus,
   })
 
   // render the QuoteListView to get the quotes to appear on the page
