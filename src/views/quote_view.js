@@ -6,16 +6,16 @@ const QuoteView = Backbone.View.extend({
   // we will pass an underscore template in the params
   initialize(params) {
     this.template = params.template;
+    this.listenTo(this.model, 'change', this.render);
   }, // initialize
   // in render we are compiling a template and then we are setting the inside of $el to be the html from compiledTemplate
   // $el is the jQuery selection of the element that encompasses our view
   render() {
-    const compiledTemplate = this.template(this.model.toJSON());
-
+    const compiledTemplate =
+    this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
 
-    // return this by convention so that methods can be chained off of a render call in app.js
-    return this
+    return this;
   }, // render
 });
 
