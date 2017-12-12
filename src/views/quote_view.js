@@ -22,10 +22,16 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellStock',
   }, // events
   buyStock(event) {
-    alert('clicked on buy stock')
+    // buyStock function runs when the 'buy' button is clicked
+
+    // call the buy() function in the Quote model that will increase the price of the stock by $1.00
+    this.model.buy();
   }, // buyStock
   sellStock(event) {
-    alert('clicked on sell stock')
+    // the sellStock function is called when the user clicks on the 'sell' button
+
+    // calls the sell() function in the Quote model that will decrease the price of the stock by $1.00
+    this.model.sell();
   }, // sellStock
 });
 
