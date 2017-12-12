@@ -17,6 +17,18 @@ const QuoteView = Backbone.View.extend({
 
     return this;
   }, // render
+  events: {
+    'click button.btn-buy': 'buyStock',
+    'click button.btn-sell': 'sellStock',
+  }, // events
+  buyStock(event) {
+    alert('clicked on buy stock')
+  }, // buyStock
+  sellStock(event) {
+    alert('clicked on sell stock')
+  }, // sellStock
 });
+
+
 
 export default QuoteView

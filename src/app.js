@@ -29,9 +29,9 @@ const quoteData = [
   },
 ];
 
+// TODO: move this functionality into the QuoteListView! 
 const render = function(quotes) {
     console.log('in render');
-
     const renderQuotes = function(quotes) {
     const $quotesUl = $('#quotes');
     $quotesUl.empty();
