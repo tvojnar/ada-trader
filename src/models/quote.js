@@ -16,12 +16,12 @@ const Quote = Backbone.Model.extend({
 
     // add $1.00 to the current price
     this.set('price', currentPrice + 1)
-    console.log(`in buy and current price is: ${this.get('price')}`);
+    console.log(`in buy and post buy price is: ${this.get('price')}`);
   },
 
   // Implement this function to decrease the price by $1.00
   // this function decreases the price of a stock by $1.00 when the 'sell' button for the stock is clicked
-  // this method is called from in the QuoteView when the sell button is clicked
+  // this function is called from in the QuoteView when the sell button is clicked
   sell() {
     // access the current price of the stock
     const sellPrice = this.get('price');
