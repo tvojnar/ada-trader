@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import Quote from 'models/quote'
 
 const quoteData = [
   {
