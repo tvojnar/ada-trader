@@ -17,6 +17,9 @@ const Quote = Backbone.Model.extend({
     // add $1.00 to the current price
     this.set('price', currentPrice + 1)
     console.log(`in buy and post buy price is: ${this.get('price')}`);
+
+    // return the currentPrice so I can send it to the TradeHistoryView from the QuoteView on the bus
+    return currentPrice
   },
 
   // Implement this function to decrease the price by $1.00

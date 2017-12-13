@@ -2,14 +2,19 @@ import Backbone from 'backbone';
 
 const TradeHistoryView = Backbone.View.extend({
   initialize(params) {
-    this.bus = params.bus,
+    this.bus = params.bus;
+    this.template = params.template;
 
-    // TODO specify what bus events to listen to!
+    // listen for the 'boughOrSold' event to be triggered from the QupteView buyStock and sellStock functions
+    this.listenTo(this.bus, 'boughtOrSold', this.addTrade);
   }, // initialize
   render() {
      // TODO: need a template to render!
   }, // render
-  // TODO need to define the event handler functions for the bus events that I am listening to!
+  addTrade(tradeData) {
+      const compiledTemplate = this.template(tradeData);
+      this.$('#trades').prepend(compiledTemplate);
+  }, // tradeData
 }) // TradeHistoryView
 
-export defualt TradeHistoryView
+export default TradeHistoryView

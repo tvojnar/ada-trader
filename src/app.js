@@ -10,6 +10,7 @@ import QuoteList from 'collections/quote_list';
 import Quote from 'models/quote';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+import TradeHistoryView from './views/trade_history_view';
 
 
 const quoteData = [
@@ -35,6 +36,7 @@ const quoteData = [
 
 
 let quoteTemplate;
+let tradeTemplate;
 
 $(document).ready(function() {
   // create a new collection from the quoteList data
@@ -50,6 +52,8 @@ $(document).ready(function() {
 
   // define the template that will be used in QuoteVistView and QuoteList
   quoteTemplate = _.template($('#quote-template').html());
+  // make a template for the TradeHistoryView
+  tradeTemplate = _.template($('#trade-template').html());
 
   // define our bus and extend Backbone.Event into it so that bus will have the functionality to listen to and have events called on it
   let bus = {};
@@ -67,5 +71,13 @@ $(document).ready(function() {
   // render the QuoteListView to get the quotes to appear on the page
   // each quote will imidiately attach to the DOM since the el for quoteListView already exists on the DOM
   quoteListView.render();
+
+
+  // create a new TradeHistoryView
+  const tradeHistoryView = new TradeHistoryView({
+    template: tradeTemplate,
+    el: $('#trades-container'),
+    bus: bus,
+  })
 
 });
