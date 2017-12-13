@@ -46,7 +46,18 @@ const QuoteView = Backbone.View.extend({
   sellStock(event) {
     // the sellStock function is called when the user clicks on the 'sell' button
     // calls the sell() function in the Quote model that will decrease the price of the stock by $1.00
-    this.model.sell();
+    let sellPrice = this.model.sell();
+    let stockName = this.model.get('symbol');
+
+
+    let tradeData = {
+      price: sellPrice,
+      name: stockName,
+      action: 'sold',
+    }
+
+    this.bus.trigger('boughtOrSold', tradeData);
+
   }, // sellStock
 });
 

@@ -33,6 +33,9 @@ const Quote = Backbone.Model.extend({
     // subtract $1.00 to the sellPrice
     this.set('price', sellPrice - 1)
     console.log(`in sell and the price after selling is: ${this.get('price')}`);
+
+    // return the sellPrice so I can send it to the TradeHistoryView from the QuoteView on the bus
+    return sellPrice;
   },
 });
 
