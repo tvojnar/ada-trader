@@ -10,6 +10,8 @@ const OrderListView = Backbone.View.extend({
     // TODO add events to listen to here
     // this.model' is a collection in this view
     this.listenTo(this.model, 'update', this.render)
+    // listen for the 'quote_names_for_form' being triggered when the QuoteListView is rendered
+    this.listenTo(this.bus, 'quote_names_for_form', this.generateOptions)
   }, // initialize
   render() {
     this.$('#orders').empty();
@@ -26,6 +28,10 @@ const OrderListView = Backbone.View.extend({
     }) // .each
     return this
   }, // render
+  generateOptions(names) {
+    // TODO use the optionsTemplate to dynamically generate the options for the select using the names passed via the bus from the QuoteListView
+    console.log('in generateOptions');
+  }, // generateOptions
 }) // OrderListView
 
 

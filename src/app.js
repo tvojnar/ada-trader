@@ -71,6 +71,14 @@ $(document).ready(function() {
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
 
+  // create a new OrderListView that will display all of the users Open Orders that are created using the form
+  // this view will be rendered when ad Order is added to OrderList because in the initialize method for OrderListView we listen for an 'update' event on the model (and the model is the orderList)
+  const orderListView = new OrderListView({
+    template: orderTemplate,
+    optionTemplate: formOptionTemplate,
+    el: $('#order-workspace'),
+    bus: bus,
+  }) // orderListView
 
   // create a new QuoteListView
   const quoteListView = new QuoteListView({
@@ -93,14 +101,7 @@ $(document).ready(function() {
     bus: bus,
   })
 
-  // create a new OrderListView that will display all of the users Open Orders that are created using the form
-  // this view will be rendered when ad Order is added to OrderList because in the initialize method for OrderListView we listen for an 'update' event on the model (and the model is the orderList)
-  const orderListView = new OrderListView({
-    template: orderTemplate,
-    optionTemplate: formOptionTemplate,
-    el: $('#order-workspace'),
-    bus: bus,
-  }) // orderListView
+
 
   // render the OrderListView to add all of the existing Orders to the DOM
   // QUESTION: do I need to wait to render this view until I have an Order? Where should I call render? Just have render triggered by an 'update' event on the OrderList collection? I think listening for 'update' on the OrderListView model in the initialize method would work
