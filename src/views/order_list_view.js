@@ -13,6 +13,13 @@ const OrderListView = Backbone.View.extend({
     // listen for the 'quote_names_for_form' being triggered when the QuoteListView is rendered
     this.listenTo(this.bus, 'quote_names_for_form', this.generateOptions)
   }, // initialize
+  events: {
+    'click button.btn-buy': 'addOrder',
+  },
+  addOrder(formData) {
+    formData.preventDefault();
+    console.log('in addOrder!');
+  }, //addOrder
   render() {
     this.$('#orders').empty();
 
@@ -32,11 +39,11 @@ const OrderListView = Backbone.View.extend({
     // use the optionsTemplate to dynamically generate the options for the select dropdown using the 'names' passed via the bus from the QuoteListView
     console.log('in generateOptions');
     console.log(names);
+    // format each name into an object with the name as the value and symbol as the key. This is the format that the optionTemplate is expecting.
     names.forEach((name) => {
       const compiledOption = this.optionTemplate({symbol: name });
       this.$('select').append(compiledOption);
     }) // .each
-
   }, // generateOptions
 }) // OrderListView
 
