@@ -5,12 +5,10 @@ const TradeHistoryView = Backbone.View.extend({
     this.bus = params.bus;
     this.template = params.template;
 
-    // listen for the 'boughOrSold' event to be triggered from the QupteView buyStock and sellStock functions
+    // listen for the 'boughOrSold' event to be triggered from the QuoteView buyStock and sellStock functions
+    // when the 'boughOrSold' event is emmited, the addTrade function is called
     this.listenTo(this.bus, 'boughtOrSold', this.addTrade);
   }, // initialize
-  render() {
-     // TODO: need a template to render!
-  }, // render
   addTrade(tradeData) {
       const compiledTemplate = this.template(tradeData);
       this.$('#trades').prepend(compiledTemplate);

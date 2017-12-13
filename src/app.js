@@ -73,7 +73,8 @@ $(document).ready(function() {
   quoteListView.render();
 
 
-  // create a new TradeHistoryView
+  // create a new TradeHistoryView that will display all of the users trades
+  // pass it the bus so it can communicate with the other views 
   const tradeHistoryView = new TradeHistoryView({
     template: tradeTemplate,
     el: $('#trades-container'),
