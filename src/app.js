@@ -43,6 +43,7 @@ const quoteData = [
 
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
 
 $(document).ready(function() {
   // create a new collection from the quoteList data
@@ -63,6 +64,8 @@ $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
   // make a template for the TradeHistoryView
   tradeTemplate = _.template($('#trade-template').html());
+  // make a template for the OrderListView and OrderView
+  orderTemplate = _.template($('#order-template').html());
 
   // define our bus and extend Backbone.Event into it so that bus will have the functionality to listen to and have events called on it
   let bus = {};
@@ -89,5 +92,18 @@ $(document).ready(function() {
     el: $('#trades-container'),
     bus: bus,
   })
+
+  // create a new OrderListView that will display all of the users Open Orders that are created using the form
+  // this view will be rendered when ad Order is added to OrderList because in the initialize method for OrderListView we listen for an 'update' event on the model (and the model is the orderList)
+  const orderListView = new OrderListView({
+    template: orderTemplate,
+    el: $('#order-workspace'),
+    bus: bus,
+  }) // orderListView
+
+  // render the OrderListView to add all of the existing Orders to the DOM
+  // QUESTION: do I need to wait to render this view until I have an Order? Where should I call render? Just have render triggered by an 'update' event on the OrderList collection? I think listening for 'update' on the OrderListView model in the initialize method would work
+  // orderListView.render();
+
 
 });
