@@ -11,6 +11,7 @@ import Quote from 'models/quote';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
+import OrderListView from './views/order_list_view';
 
 
 const quoteData = [
@@ -74,7 +75,7 @@ $(document).ready(function() {
 
 
   // create a new TradeHistoryView that will display all of the users trades
-  // pass it the bus so it can communicate with the other views 
+  // pass it the bus so it can communicate with the other views
   const tradeHistoryView = new TradeHistoryView({
     template: tradeTemplate,
     el: $('#trades-container'),

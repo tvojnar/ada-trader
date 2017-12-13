@@ -30,7 +30,7 @@ const QuoteView = Backbone.View.extend({
 
   // NOTE: have the buy method return the price the stock was bought at. then I can pass the stock name, the price, and that it was as the argument to the method in TradeHistoryView that will respond to the event I will trigger here
 
-
+  // NOTE: I may want to move the functionality of generating the tradeData object to the model and then I can pass this method in a more DRY way since I might have to repeat this code in the OrderView to
     let buyPrice = this.model.buy();
     let stockName = this.model.get('symbol');
 

@@ -14,5 +14,6 @@ const OrderView = Backbone.View.extend({
 
     return this
   }, // render
+}) // OrderView 
 
-export default OrderView 
+export default OrderView
