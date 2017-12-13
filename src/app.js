@@ -41,9 +41,7 @@ const quoteData = [
 
 
 
-let quoteTemplate;
-let tradeTemplate;
-let orderTemplate;
+
 
 $(document).ready(function() {
   // create a new collection from the quoteList data
@@ -61,11 +59,13 @@ $(document).ready(function() {
   simulator.start();
 
   // define the template that will be used in QuoteVistView and QuoteList
-  quoteTemplate = _.template($('#quote-template').html());
+  let quoteTemplate = _.template($('#quote-template').html());
   // make a template for the TradeHistoryView
-  tradeTemplate = _.template($('#trade-template').html());
+  let tradeTemplate = _.template($('#trade-template').html());
   // make a template for the OrderListView and OrderView
-  orderTemplate = _.template($('#order-template').html());
+  let orderTemplate = _.template($('#order-template').html());
+  // make a template for the OrderListView that will be used to add the names of all the quotes as 'options' for the select drop down in the form
+  let formOptionTemplate = _.template($('#option-template').html());
 
   // define our bus and extend Backbone.Event into it so that bus will have the functionality to listen to and have events called on it
   let bus = {};
@@ -97,6 +97,7 @@ $(document).ready(function() {
   // this view will be rendered when ad Order is added to OrderList because in the initialize method for OrderListView we listen for an 'update' event on the model (and the model is the orderList)
   const orderListView = new OrderListView({
     template: orderTemplate,
+    optionTemplate: formOptionTemplate,
     el: $('#order-workspace'),
     bus: bus,
   }) // orderListView

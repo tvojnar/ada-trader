@@ -5,6 +5,7 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
+    this.optionTemplate = params.optionTemplate;
 
     // TODO add events to listen to here
     // this.model' is a collection in this view
