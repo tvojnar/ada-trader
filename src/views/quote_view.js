@@ -2,10 +2,9 @@ import Backbone from 'backbone'
 import Quote from '../models/quote'
 
 const QuoteView = Backbone.View.extend({
-  // initialize is called when a nre instance of QuoteView is created
+  // initialize is called when a new instance of QuoteView is created
   // we will pass an underscore template in the params
   initialize(params) {
-    // add the template and bus as instance variables
     this.template = params.template;
     this.bus = params.bus;
     // this.render will be called when an attribute of a model is changed (aka when the Quote buy and sell methods run)
