@@ -57,7 +57,7 @@
        <div class="columns large-4 small-12 trade-column">
          <div class="order-entry-form columns small-10 small-offset-1">
            <h3>Order Entry Form</h3>
-           <form>
+           <form id="order-form">
              <label for="symbol">Symbol</label>
              <select name="symbol">
                <!-- Option entries should be added here using JavaScript -->
@@ -110,7 +110,7 @@
       <div class="detail">
         <span class="action"><%- action %></span>
         at
-        <span class="price">$<%- targetPrice.toFixed(2) %></span>
+        <span class="price">$<%- price-target.toFixed(2) %></span>
       </div>
       <button class="btn-cancel button secondary">Cancel</button>
     </script>

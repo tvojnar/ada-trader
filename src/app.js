@@ -71,6 +71,7 @@ $(document).ready(function() {
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
 
+
   // create a new OrderListView that will display all of the users Open Orders that are created using the form
   // this view will be rendered when ad Order is added to OrderList because in the initialize method for OrderListView we listen for an 'update' event on the model (and the model is the orderList)
   const orderListView = new OrderListView({
@@ -78,6 +79,7 @@ $(document).ready(function() {
     optionTemplate: formOptionTemplate,
     el: $('#order-workspace'),
     bus: bus,
+    model: orders,
   }) // orderListView
 
   // create a new QuoteListView
