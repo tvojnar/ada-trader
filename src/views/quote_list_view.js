@@ -33,7 +33,7 @@ const QuoteListView = Backbone.View.extend({
     const quoteNames = []
     this.model.each((quote) => {
       let name = quote.get('symbol');
-      quoteNames.push({symbol: name});
+      quoteNames.push(name);
     }) // .each
 
     console.log('right before the trigger for: quote_names_for_form');
