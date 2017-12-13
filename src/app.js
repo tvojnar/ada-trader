@@ -8,10 +8,15 @@ import Backbone from 'backbone';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import Quote from 'models/quote';
+import Order from 'models/order';
+import OrderList from 'collections/order_list';
+
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
 import OrderListView from './views/order_list_view';
+
+
 
 
 const quoteData = [
@@ -42,6 +47,9 @@ let tradeTemplate;
 $(document).ready(function() {
   // create a new collection from the quoteList data
   const quotes = new QuoteList(quoteData);
+
+  // create a new (empty) collection of OrderList that will eventually hold instances of Order when they are created using the form
+  const orders = new OrderList();
 
   // create a new simulator model
   const simulator = new Simulator({
