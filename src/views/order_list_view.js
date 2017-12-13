@@ -29,8 +29,14 @@ const OrderListView = Backbone.View.extend({
     return this
   }, // render
   generateOptions(names) {
-    // TODO use the optionsTemplate to dynamically generate the options for the select using the names passed via the bus from the QuoteListView
+    // use the optionsTemplate to dynamically generate the options for the select using the names passed via the bus from the QuoteListView
     console.log('in generateOptions');
+    console.log(names);
+    names.forEach((name) => {
+      const compiledOption = this.optionTemplate(name);
+      this.$('select').append(compiledOption);
+    }) // .each
+
   }, // generateOptions
 }) // OrderListView
 
