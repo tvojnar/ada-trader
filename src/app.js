@@ -73,7 +73,7 @@ $(document).ready(function() {
 
 
   // create a new OrderListView that will display all of the users Open Orders that are created using the form
-  // this view will be rendered when ad Order is added to OrderList because in the initialize method for OrderListView we listen for an 'update' event on the model (and the model is the orderList)
+  // this view will be rendered when an Order is added to OrderList because in the initialize method for OrderListView we listen for an 'update' event on the model (and the model is the orderList). The Orders will be added to the OrderList in the addOrder function in OrderListView when a user creates a new Order via the form
   const orderListView = new OrderListView({
     template: orderTemplate,
     optionTemplate: formOptionTemplate,
@@ -103,11 +103,4 @@ $(document).ready(function() {
     bus: bus,
   })
 
-
-
-  // render the OrderListView to add all of the existing Orders to the DOM
-  // QUESTION: do I need to wait to render this view until I have an Order? Where should I call render? Just have render triggered by an 'update' event on the OrderList collection? I think listening for 'update' on the OrderListView model in the initialize method would work
-  // orderListView.render();
-
-
-});
+}); // .ready 
