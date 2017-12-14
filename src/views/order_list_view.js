@@ -34,23 +34,37 @@ const OrderListView = Backbone.View.extend({
     // TODO: figure out how to get the right data out of the form to populate the model attributes with these values! Right symbol is undefined but I can access the price-target. The error message is complaining that 'price' is not defined when it is trying to make the template, but I am confused why because I don't see where the code is trying to access price ....
     console.log('in getFormData');
     console.log(event.target.innerHTML);
-    console.log(this.$(`#order-form`));
+    // console.log(this.$(`#order-form`));
 
+
+
+
+
+    // var e = document.getElementById("ddlViewBy");
+    // var strUser = e.options[e.selectedIndex].text;
     const orderData = {};
-    ['symbol', 'price-target'].forEach((field) => {
-      let val = this.$(`#order-form input[name=${field}]`).val();
-      if (val !== '') {
-        orderData[field] = val;
+
+    // pull out the symbol from the form for the orderData
+    let select = this.$(`#select`)
+    let symbolFromForm = select.val();
+    orderData['symbol'] = symbolFromForm;
+    console.log(symbolFromForm);
+
+    // pull out the price-target from the form for orderData
+    let formTargetPrice  = this.$(`#order-form input[name=${'price-target'}]`).val();
+      if (formTargetPrice !== '') {
+        orderData['targetPrice'] = formTargetPrice;
       }
-    }) // forEach
-    console.log('after forEach');
-    console.log(orderData);
+
     // pull out the innerHTML from the button that was clicked (get this via the event that was passed as an argument from addOrder) to set the action attribute as either 'Buy' or 'Sell'
     let buttonHtml = event.target.innerHTML;
     console.log('buttonHtml');
     console.log(buttonHtml);
     orderData['action'] = buttonHtml;
     // NOTE: why is action still not defined????
+
+    console.log('at end of getFormData');
+    console.log(orderData);
 
     return orderData;
 
