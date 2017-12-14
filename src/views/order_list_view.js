@@ -16,7 +16,7 @@ const OrderListView = Backbone.View.extend({
   }, // initialize
   events: {
     'click button.btn-buy': 'addOrder',
-    'click button.btn-sell': 'addOrder', 
+    'click button.btn-sell': 'addOrder',
   },
   addOrder(event) {
     event.preventDefault();
@@ -25,12 +25,24 @@ const OrderListView = Backbone.View.extend({
     const formData = this.getFormData(event);
     const newOrder = new Order(formData);
 
+
+    // QUESTION: leaving the check that the targetPrice is > or < the price of the quote in here because this will change and an order would later be invalid at the time the buy or sell goes though if I put it in the validations...
+
     // TODO: add checks to validate that newOrder isValid before adding newOrder to this.model and clearing the form
     console.log(`created a new instance of order: ${newOrder}`);
-    this.model.add(newOrder);
-    this.clearFormData();
+    if (newOrder.isValid()) {
+        this.model.add(newOrder);
+        this.updateStatusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
+        this.clearFormData();
+    } else {
+      this.updateStatusMessageFrom(newOrder.validationError);
+      newOrder.destroy();
 
+    } // if/else
   }, //addOrder
+  updateStatusMessage() {
+
+  },
   getFormData(event) {
     console.log('in getFormData');
 
@@ -60,7 +72,8 @@ const OrderListView = Backbone.View.extend({
     return orderData;
   }, // getFormData
   clearFormData() {
-
+    // clear out the targetPrice input field
+    this.$(`#order-form input[name=${'price-target'}]`).val('');
   }, // clearFormData
 
 
