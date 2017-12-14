@@ -16,6 +16,7 @@ const OrderListView = Backbone.View.extend({
   }, // initialize
   events: {
     'click button.btn-buy': 'addOrder',
+    'click button.btn-sell': 'addOrder', 
   },
   addOrder(event) {
     event.preventDefault();
@@ -31,60 +32,32 @@ const OrderListView = Backbone.View.extend({
 
   }, //addOrder
   getFormData(event) {
-    // TODO: figure out how to get the right data out of the form to populate the model attributes with these values! Right symbol is undefined but I can access the price-target. The error message is complaining that 'price' is not defined when it is trying to make the template, but I am confused why because I don't see where the code is trying to access price ....
     console.log('in getFormData');
-    console.log(event.target.innerHTML);
-    // console.log(this.$(`#order-form`));
 
-
-
-
-
-    // var e = document.getElementById("ddlViewBy");
-    // var strUser = e.options[e.selectedIndex].text;
+    // create an object to store the form data in
     const orderData = {};
 
-    // pull out the symbol from the form for the orderData
+    // pull out the symbol from the form for the and add it to orderData
     let select = this.$(`#select`)
     let symbolFromForm = select.val();
     orderData['symbol'] = symbolFromForm;
-    console.log(symbolFromForm);
 
-    // pull out the price-target from the form for orderData
+    // pull out the price-target from the form and add it to orderData
+    // have to convert formTargetPrice from a string into a Number because we call .toFixed(2) on it in the template
     let formTargetPrice  = this.$(`#order-form input[name=${'price-target'}]`).val();
       if (formTargetPrice !== '') {
         orderData['targetPrice'] = Number(formTargetPrice);
       }
-    let type = typeof formTargetPrice
-    console.log(`the type is: ${type}`);
 
-    formTargetPrice = Number(formTargetPrice);
-    type = typeof formTargetPrice
-    console.log(`formTargetPrice is ${formTargetPrice}`);
-    console.log(`type of formTargetPrice is now ${type}`);
-
-    // pull out the innerHTML from the button that was clicked (get this via the event that was passed as an argument from addOrder) to set the action attribute as either 'Buy' or 'Sell'
+    // pull out the innerHTML from the button that was clicked (get this via the event that was passed as an argument from addOrder) to set the action attribute as either 'Buy' or 'Sell' depending on if the Buy to Sell button was clicked by the user
     let buttonHtml = event.target.innerHTML;
-    console.log('buttonHtml');
-    console.log(buttonHtml);
     orderData['action'] = buttonHtml;
-    // NOTE: why is action still not defined????
 
     console.log('at end of getFormData');
     console.log(orderData);
 
+    // return the orderData to addOrder where it will be used to create a new instance of Order
     return orderData;
-
-    // getFormData() {
-    //           const taskData = {};
-    //           ['task_name', 'assignee'].forEach((field) => {
-    //             val = this.$('#add-new-task input[name=${field}]').val('');
-    //             if (val !== '') {
-    //               taskData[field] = val;
-    //               } // if
-    //           }) // forEach
-    //           return taskData;
-    //         }
   }, // getFormData
   clearFormData() {
 
