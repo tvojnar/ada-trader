@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import OrderView from './order_view';
 import Order from '../models/order';
 
+
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
@@ -26,14 +27,21 @@ const OrderListView = Backbone.View.extend({
     const newOrder = new Order(formData);
 
 
-    // QUESTION: leaving the check that the targetPrice is > or < the price of the quote in here because this will change and an order would later be invalid at the time the buy or sell goes though if I put it in the validations...
+    // QUESTION: leaving the check that the targetPrice is > or < the price of the quote in here because this will change and an order would later be invalid at the time the buy or sell goes though if I put it in the validations... also there are diffent validations for buy and sell?
 
-    // TODO: add checks to validate that newOrder isValid before adding newOrder to this.model and clearing the form
+    // NOTE: StackOverflow that shows
+    // Backbone collections support the underscorejs find method, so using that should work:
+    // things.find(function(model) { return model.get('name') === 'Lee'; });
+    // NOTE: need to have access to the quoteList collection to use this
+
+    // TODO: check that the targetPrice of newOrder is OK for the Buy or Sell before adding newOrder to this.model and clearing the form
     console.log(`created a new instance of order: ${newOrder}`);
     if (newOrder.isValid()) {
         this.model.add(newOrder);
         this.statusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
         this.clearFormData();
+        // QUESTION: Could I use the bus to have a function in QuoteView return the current price of the Quote Model in question? I could use custom event names since I have access to the value of the Quote in questions symbol attribute here.
+        // if (newOrder.get('action') === 'Buy' && (newOrder.get('targetPrice') >= )
     } else {
       this.failureStatusMessageFrom(newOrder.validationError);
       newOrder.destroy();
@@ -86,8 +94,10 @@ const OrderListView = Backbone.View.extend({
     return orderData;
   }, // getFormData
   clearFormData() {
+    console.log('in clearFormData');
     // clear out the targetPrice input field
     this.$(`#order-form input[name=${'price-target'}]`).val('');
+    this.$('#targetPrice > li').remove();
   }, // clearFormData
 
 

@@ -6,7 +6,7 @@ const Order = Backbone.Model.extend({
 
     if (!attributes.targetPrice) {
       errors.targetPrice = ['cannot be blank'];
-    }
+    } 
 
     if (!attributes.symbol) {
       errors.symbol = ['cannot be blank'];
