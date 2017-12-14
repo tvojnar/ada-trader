@@ -9,6 +9,8 @@ const QuoteView = Backbone.View.extend({
     this.bus = params.bus;
     // this.render will be called when an attribute of a model is changed (aka when the Quote buy and sell methods run)
     this.listenTo(this.model, 'change', this.render);
+    // listen for a custom event from OrderView to buy the stock if the price is right 
+    this.listenTo(this.bus, `buy${this.model.get('symbol')}`, this.buyStock)
   }, // initialize
   // in render we are compiling a template and then we are setting the inside of $el to be the html from compiledTemplate
   // $el is the jQuery selection of the element that encompasses our view
@@ -17,6 +19,13 @@ const QuoteView = Backbone.View.extend({
     const compiledTemplate =
     this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
+
+    // this event will be listened to in OrderListView
+    // the Order will listen to this event check the current price of the Quote (passed from this function to OrderListView via the bus) againts the targetPrice for the Order to determine if it is time to buy or sell the order yet.
+    let priceOfQuote = this.model.get('price');
+    let nameOfQuote = this.model.get('symbol')
+    this.bus.trigger(nameOfQuote, priceOfQuote)
+
 
     return this;
   }, // render

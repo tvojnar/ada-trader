@@ -51,13 +51,13 @@ const OrderListView = Backbone.View.extend({
         this.model.add(newOrder);
         this.statusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
         this.clearFormData();
-      // else display the correct error message depending on if the user tired to create a BUY or SELL order! 
+      // else display the correct error message depending on if the user tired to create a BUY or SELL order!
       } else {
         console.log(`in else. targetPrice: ${newOrder.get('targetPrice')}, currentQuotePrice: ${currentQuotePrice}`);
         if (newOrder.get('action') === 'Buy') {
-          this.statusMessage(`The target price you listed (${Number(newOrder.get('targetPrice')).toFixed(2)}) is less than the current price of the Quote (${Number(currentQuotePrice).toFixed(2)}) so the order was not created.`)
-        } else if (newOrder.get('action') === 'Sell') {
           this.statusMessage(`The target price you listed (${Number(newOrder.get('targetPrice')).toFixed(2)}) is greater than the current price of the Quote (${Number(currentQuotePrice).toFixed(2)}) so the order was not created.`)
+        } else if (newOrder.get('action') === 'Sell') {
+          this.statusMessage(`The target price you listed (${Number(newOrder.get('targetPrice')).toFixed(2)}) is less than the current price of the Quote (${Number(currentQuotePrice).toFixed(2)}) so the order was not created.`)
         }
       } // inner if/else
     } else {
