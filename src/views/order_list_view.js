@@ -53,8 +53,15 @@ const OrderListView = Backbone.View.extend({
     // pull out the price-target from the form for orderData
     let formTargetPrice  = this.$(`#order-form input[name=${'price-target'}]`).val();
       if (formTargetPrice !== '') {
-        orderData['targetPrice'] = formTargetPrice;
+        orderData['targetPrice'] = Number(formTargetPrice);
       }
+    let type = typeof formTargetPrice
+    console.log(`the type is: ${type}`);
+
+    formTargetPrice = Number(formTargetPrice);
+    type = typeof formTargetPrice
+    console.log(`formTargetPrice is ${formTargetPrice}`);
+    console.log(`type of formTargetPrice is now ${type}`);
 
     // pull out the innerHTML from the button that was clicked (get this via the event that was passed as an argument from addOrder) to set the action attribute as either 'Buy' or 'Sell'
     let buttonHtml = event.target.innerHTML;
