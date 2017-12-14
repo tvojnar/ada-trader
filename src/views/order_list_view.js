@@ -32,7 +32,7 @@ const OrderListView = Backbone.View.extend({
     console.log(`created a new instance of order: ${newOrder}`);
     if (newOrder.isValid()) {
         this.model.add(newOrder);
-        this.successStatusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
+        this.statusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
         this.clearFormData();
     } else {
       this.failureStatusMessageFrom(newOrder.validationError);
@@ -41,8 +41,8 @@ const OrderListView = Backbone.View.extend({
     } // if/else
   }, //addOrder
   failureStatusMessageFrom(messageHash) {
-    // const $statusMesages = this.$('#status-messages');
-    // $statusMesages.empty();
+    // this function will be called in addOrder when the new instance of Order is not valid
+    // this error message will appear below the input label
     Object.keys(messageHash).forEach((messageType) => {
       let $statusMessages = this.$(`#${messageType}`)
       messageHash[messageType].forEach((message) => {
@@ -50,7 +50,9 @@ const OrderListView = Backbone.View.extend({
       }) // inner forEach
     }) // outer forEach
   }, // updateStatusMessageFrom
-  successStatusMessage(message) {
+  statusMessage(message) {
+    // this function will be called from in addOrder when a valid instance of Order was created
+    // this status message will appear at the top of the form!
     const $statusMesages = this.$('#status-messages');
     $statusMesages.empty();
     $statusMesages.append(`<li>${message}</li>`)
