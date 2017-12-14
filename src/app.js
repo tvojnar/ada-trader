@@ -80,6 +80,7 @@ $(document).ready(function() {
     el: $('#order-workspace'),
     bus: bus,
     model: orders,
+    quoteList: quotes, 
   }) // orderListView
 
   // create a new QuoteListView
@@ -103,4 +104,4 @@ $(document).ready(function() {
     bus: bus,
   })
 
-}); // .ready 
+}); // .ready

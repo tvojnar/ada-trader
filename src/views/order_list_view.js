@@ -8,6 +8,7 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.optionTemplate = params.optionTemplate;
+    this.quoteList = params.quoteList;
 
     // TODO add events to listen to here
     // this.model' is a collection in this view
@@ -29,23 +30,39 @@ const OrderListView = Backbone.View.extend({
 
     // QUESTION: leaving the check that the targetPrice is > or < the price of the quote in here because this will change and an order would later be invalid at the time the buy or sell goes though if I put it in the validations... also there are diffent validations for buy and sell?
 
-    // NOTE: StackOverflow that shows
-    // Backbone collections support the underscorejs find method, so using that should work:
-    // things.find(function(model) { return model.get('name') === 'Lee'; });
-    // NOTE: need to have access to the quoteList collection to use this
-
-    // TODO: check that the targetPrice of newOrder is OK for the Buy or Sell before adding newOrder to this.model and clearing the form
     console.log(`created a new instance of order: ${newOrder}`);
     if (newOrder.isValid()) {
+      // NOTE: this is HUGE if/else statement! Try to come back and refactor this to make it better later :)
+
+      // pull out the current price of the Quote that corresponds to newOrder to check the targetPrice of newOrder againts
+      let currentQuote = this.quoteList.find(function(model) { return model.get('symbol') === newOrder.get('symbol')})
+      let currentQuotePrice = currentQuote.get('price');
+      console.log(`the current price of the quote is ${currentQuotePrice}`);
+
+      // for a BUY: if the targetPrice of the newOrder is less than the current price of the Quote go ahead and add newOrder to the OrderList collection
+      if (newOrder.get('action') === 'Buy' && (newOrder.get('targetPrice') < currentQuotePrice )) {
+        console.log(`in if (buy). targetPrice: ${newOrder.get('targetPrice')}, currentQuotePrice: ${currentQuotePrice}`);
         this.model.add(newOrder);
         this.statusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
         this.clearFormData();
-        // QUESTION: Could I use the bus to have a function in QuoteView return the current price of the Quote Model in question? I could use custom event names since I have access to the value of the Quote in questions symbol attribute here.
-        // if (newOrder.get('action') === 'Buy' && (newOrder.get('targetPrice') >= )
+      // for a SELL: if the targetPrice of newOrder is greater than the current price of the Quote go ahead and add newOrder to the OrderList collection
+      } else if ((newOrder.get('action') === 'Sell' && (newOrder.get('targetPrice') > currentQuotePrice ))) {
+        console.log(`in else if (sell). targetPrice: ${newOrder.get('targetPrice')}, currentQuotePrice: ${currentQuotePrice}`);
+        this.model.add(newOrder);
+        this.statusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
+        this.clearFormData();
+      // else display the correct error message depending on if the user tired to create a BUY or SELL order! 
+      } else {
+        console.log(`in else. targetPrice: ${newOrder.get('targetPrice')}, currentQuotePrice: ${currentQuotePrice}`);
+        if (newOrder.get('action') === 'Buy') {
+          this.statusMessage(`The target price you listed (${Number(newOrder.get('targetPrice')).toFixed(2)}) is less than the current price of the Quote (${Number(currentQuotePrice).toFixed(2)}) so the order was not created.`)
+        } else if (newOrder.get('action') === 'Sell') {
+          this.statusMessage(`The target price you listed (${Number(newOrder.get('targetPrice')).toFixed(2)}) is greater than the current price of the Quote (${Number(currentQuotePrice).toFixed(2)}) so the order was not created.`)
+        }
+      } // inner if/else
     } else {
       this.failureStatusMessageFrom(newOrder.validationError);
       newOrder.destroy();
-
     } // if/else
   }, //addOrder
   failureStatusMessageFrom(messageHash) {
@@ -79,9 +96,9 @@ const OrderListView = Backbone.View.extend({
     // pull out the price-target from the form and add it to orderData
     // have to convert formTargetPrice from a string into a Number because we call .toFixed(2) on it in the template
     let formTargetPrice  = this.$(`#order-form input[name=${'price-target'}]`).val();
-      if (formTargetPrice !== '') {
-        orderData['targetPrice'] = Number(formTargetPrice);
-      }
+    if (formTargetPrice !== '') {
+      orderData['targetPrice'] = Number(formTargetPrice);
+    }
 
     // pull out the innerHTML from the button that was clicked (get this via the event that was passed as an argument from addOrder) to set the action attribute as either 'Buy' or 'Sell' depending on if the Buy to Sell button was clicked by the user
     let buttonHtml = event.target.innerHTML;
@@ -99,34 +116,6 @@ const OrderListView = Backbone.View.extend({
     this.$(`#order-form input[name=${'price-target'}]`).val('');
     this.$('#targetPrice > li').remove();
   }, // clearFormData
-
-
-
-
-///////
-  // addTask(event) {
-  //           event.preventDefault();
-  //
-  //           const formData = this.getFormData();
-  //           const newTask = new Task(formData);
-  //
-  //           if (newTask.isValid()) {
-  //             this.model.add(newTask);
-  //             clearFormData();
-  //             this.updatedStatusMessage(`${newTask.get('task_name')} created!`)
-  //           } else {
-  //             this.updateStatusMessageFrom(newTask.validationError);
-  //             newTask.destroy();
-  //           }
-  //
-  //
-  //         },
-  //         clearFormData() {
-  //         ['task_name', 'assignee'].forEach((field) => {
-  //           this.$('#add-new-task input[name=${field}]').val();
-  //         },
-  //
-///////
   render() {
     this.$('#orders').empty();
 
