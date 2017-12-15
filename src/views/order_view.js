@@ -21,7 +21,7 @@ const OrderView = Backbone.View.extend({
     'click button.btn-cancel': 'cancelOrder',
   }, // events
   cancelOrder(event) {
-    // when the cancel button is clicked on an Order destory the model of that Order and also remove that orderView from the DOM so that nothing is listening for events from that Order anymore 
+    // when the cancel button is clicked on an Order destory the model of that Order and also remove that orderView from the DOM so that nothing is listening for events from that Order anymore
     this.model.destroy();
     this.remove();
   }, // cancelOrder
@@ -40,7 +40,7 @@ const OrderView = Backbone.View.extend({
 
     // check if it is time to buy the quote the order is for
     // only proccess the order and buy the quote if the price of the quote is low enough
-    if (this.model.get('action') === 'Buy' && (target > currentQuotePrice) ) {
+    if (this.model.get('action') === 'Buy' && (target >= currentQuotePrice) ) {
       console.log('target < currentQuotePrice -- time to buy! ');
 
       // If it is time to buy the order you need to destroy the model and remove it from the DOM so that nothing is listening for ecents from it anymore and it will only be bought once
@@ -51,7 +51,7 @@ const OrderView = Backbone.View.extend({
       this.bus.trigger(`buy${this.model.get('symbol')}`)
     } // if for buy
     // only proccess the order and sell the Quote if the price of the Quote is low enough
-    else if (this.model.get('action') === 'Sell' && (target < currentQuotePrice) ) {
+    else if (this.model.get('action') === 'Sell' && (target <= currentQuotePrice) ) {
       console.log('target > currentQuotePrice -- time to sell!');
 
       // If it is time to sell the order you need to destroy the model and remove it from the DOM so that nothing is listening for ecents from it anymore and it will only be bought once
