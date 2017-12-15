@@ -18,7 +18,12 @@ const OrderListView = Backbone.View.extend({
   events: {
     'click button.btn-buy': 'addOrder',
     'click button.btn-sell': 'addOrder',
+    'click #clear': 'clearStatus',
   },
+  clearStatus() {
+    this.$('#status-messages').empty();
+    this.$('#clear').addClass('clear');
+  }, // clearStatus
   addOrder(event) {
     event.preventDefault();
     console.log('in addOrder!');
