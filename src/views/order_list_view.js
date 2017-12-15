@@ -44,8 +44,6 @@ const OrderListView = Backbone.View.extend({
 
         this.model.add(newOrder);
         this.statusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
-        // TODO: figure out how to make the button appear!!
-        this.$('#clear').classList.remove('clear')
         this.clearFormData();
       // for a SELL: if the targetPrice of newOrder is greater than the current price of the Quote go ahead and add newOrder to the OrderList collection
       } else if ((newOrder.get('action') === 'Sell' && (newOrder.get('targetPrice') > currentQuotePrice ))) {
@@ -87,6 +85,8 @@ const OrderListView = Backbone.View.extend({
     const $statusMesages = this.$('#status-messages');
     $statusMesages.empty();
     $statusMesages.append(`<li>${message}</li>`)
+    // TODO: figure out how to make the button appear!!
+    this.$('#clear').removeClass('clear')
   }, // updateStatusMessage
   getFormData(event) {
     console.log('in getFormData');
