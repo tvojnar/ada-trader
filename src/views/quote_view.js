@@ -9,7 +9,7 @@ const QuoteView = Backbone.View.extend({
     this.bus = params.bus;
     // this.render will be called when an attribute of a model is changed (aka when the Quote buy and sell methods run)
     this.listenTo(this.model, 'change', this.render);
-    // listen for a custom event from OrderView to buy the stock if the price is right 
+    // listen for a custom event from OrderView to buy the stock if the price is right
     this.listenTo(this.bus, `buy${this.model.get('symbol')}`, this.buyStock)
   }, // initialize
   // in render we are compiling a template and then we are setting the inside of $el to be the html from compiledTemplate
@@ -39,7 +39,7 @@ const QuoteView = Backbone.View.extend({
 
   // NOTE: have the buy method return the price the stock was bought at. then I can pass the stock name, the price, and that it was as the argument to the method in TradeHistoryView that will respond to the event I will trigger here
 
-  // NOTE: I may want to move the functionality of generating the tradeData object to the model and then I can pass this method in a more DRY way since I might have to repeat this code in the OrderView to
+  // NOTE: I may want to move the functionality of generating the tradeData object to the model and then I can pass this data in a more DRY way since I might have to repeat this code in the OrderView to
     let buyPrice = this.model.buy();
     let stockName = this.model.get('symbol');
 

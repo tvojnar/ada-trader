@@ -22,9 +22,16 @@ const OrderView = Backbone.View.extend({
     console.log('in checkPriceChange');
     let target = Number(this.model.get('targetPrice'));
     currentQuotePrice = Number(currentQuotePrice);
+    console.log(`target = ${target}`);
+    console.log(`currentQuotePrice is : ${currentQuotePrice}`);
     // QUESTION: Why does this code freeze my app? Why am I always getting into buy with this?
     // I thought making target and currentQuotePrice Numbers would fix it but it didn't
-    if (this.model.get('action') === 'Buy' && (target < currentQuotePrice) ) {
+    // maybe this is because I'm not destroying the Order when this happens so it just keeps firing the event?
+    if (this.model.get('action') === 'Buy' && (target > currentQuotePrice) ) {
+      console.log('target < currentQuotePrice');
+      this.model.destroy();
+      this.remove();
+
       this.bus.trigger(`buy${this.model.get('symbol')}`)
     }
   } // checkPriceChange
