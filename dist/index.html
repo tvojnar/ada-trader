@@ -57,13 +57,19 @@
        <div class="columns large-4 small-12 trade-column">
          <div class="order-entry-form columns small-10 small-offset-1">
            <h3>Order Entry Form</h3>
-           <form>
+           <ul id="status-messages">
+             <!-- status messages will be rendered here -->
+           </ul>
+          <button id="clear" class="button clear">Clear</button>
+           <form id="order-form">
              <label for="symbol">Symbol</label>
-             <select name="symbol">
+             <select name="symbol" id="select">
                <!-- Option entries should be added here using JavaScript -->
              </select>
+              <div id="symbol"></div>
              <label for="price-target">Price</label>
              <input type="number" name="price-target" step="0.10" min="0.00" placeholder="100.00" />
+             <div id="targetPrice"></div>
              <label>Action</label>
              <button class="btn-buy alert button">Buy</button>
              <button class="btn-sell success button">Sell</button>
@@ -108,13 +114,16 @@
     <script type="text/template" id="order-template">
       <h3 class="symbol"><%- symbol %></h3>
       <div class="detail">
-        <span class="action"><%- buy ? 'buy' : 'sell' %></span>
+        <span class="action"><%- action %></span>
         at
         <span class="price">$<%- targetPrice.toFixed(2) %></span>
       </div>
       <button class="btn-cancel button secondary">Cancel</button>
     </script>
 
+    <script type="text/template" id="option-template">
+       <option value="<%- symbol %>"><%- symbol %></option>
+    </script>
     <script src="/app.bundle.js" charset="utf-8"></script>
   </body>
 </html>

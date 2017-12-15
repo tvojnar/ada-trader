@@ -28,6 +28,18 @@ const QuoteListView = Backbone.View.extend({
       this.$('#quotes').append(quoteView.render().$el)
     }) // .each
 
+    // generate all the names/symbols of the Quptes to pass via the bus to the OrderListView so it can dynamically generate the options for the select dropdown menu with these names
+    // NOTE: could combine this into the .each loop above... but more readable if I leave it down here ....
+    const quoteNames = []
+    this.model.each((quote) => {
+      let name = quote.get('symbol');
+      quoteNames.push(name);
+    }) // .each
+
+    console.log('right before the trigger for: quote_names_for_form');
+    // pass the quoteNames to the OrderListView via the bus
+    this.bus.trigger('quote_names_for_form', quoteNames);
+
     return this
   }, // render
 }) // QuoteListView

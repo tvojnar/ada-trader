@@ -1,0 +1,8 @@
+To make the orders section:
+
+1. Need to have a model and collection for the orders
+      ~ when the form is filled out it creates a new instance of the Order model and is added to the OrderList collection
+2. the Open Orders view renders the OrderList collection
+    ~ when you hit 'cancel' it destroys the Order instance so no one will be listening to that instance anymore
+    ~ have an attribute for the Order instances that match the sumbol for the quote so I can still use custom 'matching' event names to pair an Order with a Quote to know when to make the Order go though depending on the price change
+3. To get the data to the form from the Quotes the form will be passed a list of the names of all of the Quotes to populate the drop down. Then when a new Order is created it checks that the 'waiting price' for that Order is ok compared to the current price of the Quote with a matching name. 
