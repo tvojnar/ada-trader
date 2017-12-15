@@ -10,7 +10,6 @@ const OrderListView = Backbone.View.extend({
     this.optionTemplate = params.optionTemplate;
     this.quoteList = params.quoteList;
 
-    // TODO add events to listen to here
     // this.model' is a collection in this view
     this.listenTo(this.model, 'update', this.render)
     // listen for the 'quote_names_for_form' being triggered when the QuoteListView is rendered
@@ -45,7 +44,7 @@ const OrderListView = Backbone.View.extend({
 
         this.model.add(newOrder);
         this.statusMessage(`A new order for ${newOrder.get('symbol')} was created!`)
-        // TODO: figure out how to make the button appear!! 
+        // TODO: figure out how to make the button appear!!
         this.$('#clear').classList.remove('clear')
         this.clearFormData();
       // for a SELL: if the targetPrice of newOrder is greater than the current price of the Quote go ahead and add newOrder to the OrderList collection
@@ -73,9 +72,11 @@ const OrderListView = Backbone.View.extend({
   failureStatusMessageFrom(messageHash) {
     // this function will be called in addOrder when the new instance of Order is not valid
     // this error message will appear below the input label
+
     Object.keys(messageHash).forEach((messageType) => {
       let $statusMessages = this.$(`#${messageType}`)
       messageHash[messageType].forEach((message) => {
+        $statusMessages.empty();
         $statusMessages.append(`<li>${message}</li>`)
       }) // inner forEach
     }) // outer forEach
