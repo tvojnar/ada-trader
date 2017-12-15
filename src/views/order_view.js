@@ -17,23 +17,41 @@ const OrderView = Backbone.View.extend({
 
     return this
   }, // render
-  // TODO: Finish this function to sell or buy the stock if the price is good!
+  // This function will sell or buy the stock referenced in the Order if the price is good!
   checkPriceChange(currentQuotePrice) {
     console.log('in checkPriceChange');
+
+    // pull out the targetPrice for the Order and make it a number
     let target = Number(this.model.get('targetPrice'));
+    // make the currentQuotePrice (which was passed via the bus from the QuoteView render function) into a number
     currentQuotePrice = Number(currentQuotePrice);
+
     console.log(`target = ${target}`);
     console.log(`currentQuotePrice is : ${currentQuotePrice}`);
-    // QUESTION: Why does this code freeze my app? Why am I always getting into buy with this?
-    // I thought making target and currentQuotePrice Numbers would fix it but it didn't
-    // maybe this is because I'm not destroying the Order when this happens so it just keeps firing the event?
+
+    // check if it is time to buy the quote the order is for
+    // only buy the order is the targetPrice for the order is greater than the current price of the stock
     if (this.model.get('action') === 'Buy' && (target > currentQuotePrice) ) {
-      console.log('target < currentQuotePrice');
+      console.log('target < currentQuotePrice -- time to buy! ');
+
+      // If it is time to buy the order you need to destroy the model and remove it from the DOM so that nothing is listening for ecents from it anymore and it will only be bought once
       this.model.destroy();
       this.remove();
 
+      // trigger the quote the order is associated with to be bought via the bus. The event will trigger the buyStock() function in QuoteView that then triggers the buy() method in the Quote model
       this.bus.trigger(`buy${this.model.get('symbol')}`)
-    }
+    } // if for buy
+    else if (this.model.get('action') === 'Sell' && (target < currentQuotePrice) ) {
+      console.log('target > currentQuotePrice -- time to sell!');
+
+      // If it is time to sell the order you need to destroy the model and remove it from the DOM so that nothing is listening for ecents from it anymore and it will only be bought once
+      this.model.destroy();
+      this.remove();
+
+      // trigger the quote the order is associated with to be sold via the bus. The event will trigger the sellStock() function in QuoteView that then triggers the sell() method in the Quote model
+      this.bus.trigger(`sell${this.model.get('symbol')}`)
+
+    } // else for sell
   } // checkPriceChange
 }) // OrderView
 

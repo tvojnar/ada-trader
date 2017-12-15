@@ -11,6 +11,8 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
     // listen for a custom event from OrderView to buy the stock if the price is right
     this.listenTo(this.bus, `buy${this.model.get('symbol')}`, this.buyStock)
+    // litsten for a custom event from OrderView to sell the stock if the price is right
+    this.listenTo(this.bus, `sell${this.model.get('symbol')}`, this.sellStock)
   }, // initialize
   // in render we are compiling a template and then we are setting the inside of $el to be the html from compiledTemplate
   // $el is the jQuery selection of the element that encompasses our view
