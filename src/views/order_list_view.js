@@ -90,7 +90,6 @@ const OrderListView = Backbone.View.extend({
     const $statusMesages = this.$('#status-messages');
     $statusMesages.empty();
     $statusMesages.append(`<li>${message}</li>`)
-    // TODO: figure out how to make the button appear!!
     this.$('#clear').removeClass('clear')
   }, // updateStatusMessage
   getFormData(event) {

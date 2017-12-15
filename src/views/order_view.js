@@ -25,7 +25,6 @@ const OrderView = Backbone.View.extend({
     this.model.destroy();
     this.remove();
   }, // cancelOrder
-  // TODO: DRY up the checkPriceChange function
   // This function will sell or buy the stock referenced in the Order if the price is good!
   checkPriceChange(currentQuotePrice) {
     console.log('in checkPriceChange');
